@@ -28,7 +28,12 @@ function obterDataHoraAtual() {
 function calcularEGerarNota(event) {
     event.preventDefault();
 
-    // Obter valores do formulário
+    // Obter valores do formulário (Prestador de Serviços)
+    const razaoSocial = document.getElementById('razaoSocialInput').value;
+    const cnpjPrestador = document.getElementById('cnpjInput').value;
+    const enderecoPrestador = document.getElementById('enderecoInput').value;
+
+    // Obter valores do formulário (Nota)
     const valorVenda = parseFloat(document.getElementById('valorVenda').value);
     const itensVendidos = document.getElementById('itensVendidos').value;
     const irpf = parseFloat(document.getElementById('irpf').value);
@@ -37,7 +42,13 @@ function calcularEGerarNota(event) {
     const inss = parseFloat(document.getElementById('inss').value);
     const issqn = parseFloat(document.getElementById('issqn').value);
 
-    // Validar se todos os campos foram preenchidos
+    // Validar se todos os campos do Prestador foram preenchidos
+    if (!razaoSocial.trim() || !cnpjPrestador.trim() || !enderecoPrestador.trim()) {
+        alert('Por favor, preencha todos os dados do Prestador de Serviço!');
+        return;
+    }
+
+    // Validar se todos os campos da Venda foram preenchidos
     if (isNaN(valorVenda) || valorVenda <= 0) {
         alert('Por favor, insira um valor de venda válido!');
         return;
@@ -64,6 +75,13 @@ function calcularEGerarNota(event) {
     // Preencher dados na nota fiscal
     document.getElementById('numeroNota').textContent = gerarNumeroNota();
     document.getElementById('dataEmissao').textContent = obterDataHoraAtual();
+
+    // PREENCHER DADOS DO PRESTADOR DE SERVIÇOS
+    document.getElementById('razaoSocialOutput').textContent = razaoSocial;
+    document.getElementById('cnpjOutput').textContent = cnpjPrestador;
+    document.getElementById('enderecoOutput').textContent = enderecoPrestador;
+    // FIM PREENCHIMENTO
+
     document.getElementById('descricaoServicos').textContent = itensVendidos;
     document.getElementById('valorTotal').textContent = formatarMoeda(valorVenda);
 

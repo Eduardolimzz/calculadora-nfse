@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora NFS-e - Nota Fiscal de Serviço</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 Calculadora NFS-e</h1>
+            <p>Sistema de Cálculo e Emissão de Nota Fiscal de Serviço</p>
+        </header>
+
+        <div class="form-section">
+            <h2>Dados da Nota Fiscal</h2>
+            
+            <form id="nfseForm">
+                <div class="form-group">
+                    <label for="valorVenda">Valor da Venda (R$):</label>
+                    <input type="number" id="valorVenda" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="itensVendidos">Itens Vendidos (Descrição dos Serviços):</label>
+                    <textarea id="itensVendidos" rows="4" placeholder="Ex: Desenvolvimento de site institucional, Manutenção de sistema..." required></textarea>
+                </div>
+
+                <h3>Porcentagens dos Impostos (%)</h3>
+
+                <div class="impostos-grid">
+                    <div class="form-group">
+                        <label for="irpf">IRPF (%):</label>
+                        <input type="number" id="irpf" step="0.01" min="0" max="100" value="4.8">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pis">PIS (%):</label>
+                        <input type="number" id="pis" step="0.01" min="0" max="100" value="0.65">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cofins">COFINS (%):</label>
+                        <input type="number" id="cofins" step="0.01" min="0" max="100" value="3.0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inss">INSS (%):</label>
+                        <input type="number" id="inss" step="0.01" min="0" max="100" value="11.0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issqn">ISSQN (%):</label>
+                        <input type="number" id="issqn" step="0.01" min="0" max="100" value="5.0">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-calcular">Calcular e Gerar NFS-e</button>
+            </form>
+        </div>
+
+        <div id="notaFiscal" class="nota-fiscal hidden">
+            <div class="nota-header">
+                <h2>NOTA FISCAL DE SERVIÇO ELETRÔNICA - NFS-e</h2>
+                <p class="nota-numero">Nº <span id="numeroNota"></span></p>
+                <p class="data-emissao">Emitida em: <span id="dataEmissao"></span></p>
+            </div>
+
+            <div class="nota-content">
+                <div class="secao">
+                    <h3>Prestador de Serviços</h3>
+                    <p><strong>Razão Social:</strong> Sua Empresa LTDA</p>
+                    <p><strong>CNPJ:</strong> 00.000.000/0001-00</p>
+                    <p><strong>Endereço:</strong> Rua Exemplo, 123 - Brasília/DF</p>
+                </div>
+
+                <div class="secao">
+                    <h3>Descrição dos Serviços</h3>
+                    <p id="descricaoServicos"></p>
+                </div>
+
+                <div class="secao valores">
+                    <h3>Valores e Impostos</h3>
+                    
+                    <table class="tabela-valores">
+                        <tr>
+                            <td><strong>Valor Total dos Serviços:</strong></td>
+                            <td class="valor" id="valorTotal"></td>
+                        </tr>
+                    </table>
+
+                    <h4>Impostos Retidos:</h4>
+                    <table class="tabela-impostos">
+                        <thead>
+                            <tr>
+                                <th>Imposto</th>
+                                <th>Alíquota</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>IRPF</td>
+                                <td id="aliquotaIRPF"></td>
+                                <td id="valorIRPF"></td>
+                            </tr>
+                            <tr>
+                                <td>PIS</td>
+                                <td id="aliquotaPIS"></td>
+                                <td id="valorPIS"></td>
+                            </tr>
+                            <tr>
+                                <td>COFINS</td>
+                                <td id="aliquotaCOFINS"></td>
+                                <td id="valorCOFINS"></td>
+                            </tr>
+                            <tr>
+                                <td>INSS</td>
+                                <td id="aliquotaINSS"></td>
+                                <td id="valorINSS"></td>
+                            </tr>
+                            <tr>
+                                <td>ISSQN</td>
+                                <td id="aliquotaISSQN"></td>
+                                <td id="valorISSQN"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><strong>Total de Impostos:</strong></td>
+                                <td id="totalImpostos"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <table class="tabela-valores valor-liquido">
+                        <tr>
+                            <td><strong>Valor Líquido a Receber:</strong></td>
+                            <td class="valor destaque" id="valorLiquido"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="nota-footer">
+                <button onclick="window.print()" class="btn-imprimir">🖨️ Imprimir NFS-e</button>
+                <button onclick="limparFormulario()" class="btn-nova">📝 Nova Nota Fiscal</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Desenvolvido para fins educacionais | © 2025</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

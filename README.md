@@ -36,7 +36,7 @@ Para rodar este projeto em sua máquina local, siga os passos:
     ```bash
     cd calculadora-nfse
     ```
-3.  Abra o arquivo `index.html` (ou o nome que você usou para o arquivo HTML) em seu navegador preferido.
+3.  Abra o arquivo `index.html` em seu navegador preferido.
 
 ## Estrutura do Projeto
  ```bash

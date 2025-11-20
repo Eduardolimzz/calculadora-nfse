@@ -15,9 +15,9 @@ Após o cálculo, a página exibe o **Valor Líquido a Receber** e o detalhament
 ### Link da Aplicação Online (GitHub Pages)
 
 Você pode testar a calculadora diretamente através do link de deploy:
-
-(substituir no deploy)
-
+```bash
+https://eduardolimzz.github.io/calculadora-nfse/
+```
 ## Tecnologias Utilizadas
 
 * **HTML5:** Estrutura da página e formulário.
